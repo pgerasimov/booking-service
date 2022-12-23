@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+<br><br>
+
+<h3>Регистрация</h3>
+
+<form action="{{ url_for('process_registration') }}" method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.username_reg.label }}<br>
+        {{ form.username_reg() }}
+    </div>
+
+    <div class="form-group">
+        {{ form.password_reg.label }}<br>
+        {{ form.password_reg() }}
+        <small id="emailHelp" class="form-text text-muted">Пароль должен содержать хотя бы одну заглавную букву, хотя бы одну цифру и быть не менее 8 символов</small>
+
+
+    </div>
+
+    <div class="form-group">
+        {{ form.password_reg_confirm.label }}<br>
+        {{ form.password_reg_confirm() }}
+
+    </div>
+
+
+    <div>
+        {{ form.submit_reg }}
+    </div>
+
+</form>
+    </div>
+
+{% endblock %}
