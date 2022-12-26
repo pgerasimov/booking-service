@@ -11,6 +11,7 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(50))
     password = db.Column(db.String(120))
     last_login = db.Column(db.DateTime, default=datetime.datetime.now)
+    roles = db.relationship('Roles', secondary='user_roles')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -20,6 +21,20 @@ class Users(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User {}>'.format(self.email)
+
+
+class Roles(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), nullable=False, unique=True)
+
+    def __repr__(self):
+        return self.name
+
+
+class UserRoles(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
 
 
 class Slots(db.Model):
