@@ -22,9 +22,17 @@ class Users(db.Model, UserMixin):
         return '<User {}>'.format(self.email)
 
 
-class Schedule (db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'))
-    from_date = db.Column(db.DateTime, default=datetime.datetime.now)
-    till_date = db.Column(db.DateTime, default=datetime.datetime.now)
-    status = db.Column(db.String, required)
+# TODO: Thin about schedule + service
+# class Schedule (db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user = db.Column(db.Integer, db.ForeignKey('users.id'))
+#     date = db.Column(db.DateTime)
+#     duration = db.Column(db.Integer)
+#     status = db.Column(db.String(15))
+#
+#
+# class Service(db.Model):
+#     id = db.Cloumn(db.Integer, primary_key=True)
+#     name = db.Column(db.String(25))
+#     description = db.Column(db.String(100))
+#     price = db.Column(db.Integer)
