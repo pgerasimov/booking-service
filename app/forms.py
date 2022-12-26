@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Email, Regexp, EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, DateTimeField, SelectField, IntegerField
+from wtforms.validators import DataRequired, Regexp, EqualTo, NumberRange
 
 regexp = r'(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\S+]{8,}'
 
@@ -52,6 +52,18 @@ class RegistrationForm(FlaskForm):
             "type": "password"})
     submit_reg = SubmitField(
         'Зарегистрироваться',
+        render_kw={
+            "class": "btn btn-primary",
+            "Type": "submit"})
+
+
+class SlotGenerationForm(FlaskForm):
+    work_date = DateField('Date', validators=[DataRequired()])
+    start_time = IntegerField('Start time', validators=[NumberRange(min=8,max=20)], render_kw={"placeholder": "8"})
+    end_time = IntegerField('End time', validators=[NumberRange(min=9,max=21)], render_kw={"placeholder": "21"})
+    duration = SelectField('Длительность приема', choices=[('1', '1 Час'), ('2', '2 Часа')])
+    submit = SubmitField(
+        'Сгенерировать',
         render_kw={
             "class": "btn btn-primary",
             "Type": "submit"})

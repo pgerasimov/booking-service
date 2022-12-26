@@ -3,11 +3,44 @@
 {% block content %}
 
 <center>
-  <p></p>
-<div>
-    <p>Сервис записи к любому специалисту. Как у yClients только лучше!</p>
-    <img src="https://img.freepik.com/premium-vector/cool-man-logo_105664-8.jpg">
-</div>
+    <p></p>
+    <div>
+        <h2>Мое расписание</h2>
+        <form>
+
+        <hr>
+
+        <h2>Сформировать расписение</h2>
+        <form action="{{ url_for('generate-slots') }}" method="post">
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.work_date.label }}<br>
+            {{ form.work_date(size=5) }}<br>
+            {% for error in form.work_date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.start_time.label }}
+            {{ form.start_time }}<br>
+            {{ form.end_time.label }}
+            {{ form.end_time(size=8) }}
+            {% for error in form.start_time.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+             <p>
+            {{ form.duration.label }}
+            {{ form.duration(size=2) }}
+            {% for error in form.start_time.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    </div>
 </center>
 
 {% endblock %}

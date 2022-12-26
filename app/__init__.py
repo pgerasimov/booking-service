@@ -5,7 +5,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from flask_migrate import Migrate
 from app.config import Config
 from flask import render_template, flash, redirect, url_for
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, SlotGenerationForm
 from app.models import db, Users
 
 
@@ -28,9 +28,11 @@ def create_app():
     @app.route('/login')
     def login():
         form = LoginForm()
+
         if current_user.is_authenticated:
             flash('Вы уже авторизованы')
             return redirect(url_for('schedule'))
+
         return render_template('login.html', form=form, title="Authorization", active='login')
 
     @app.route('/registration')
@@ -48,7 +50,7 @@ def create_app():
             login_user(user, remember=form.remember_me.data)
             flash('Вы вошли')
             logging.info('Auth success')
-            return redirect(url_for('login'))
+            return redirect(url_for('schedule'))
 
         flash('Wrong credentionals')
         logging.error('wrong credentionals')
@@ -86,8 +88,15 @@ def create_app():
     @app.route('/schedule')
     @login_required
     def schedule():
+        form = SlotGenerationForm()
         title = 'This is a magic'
-        return render_template('schedule.html', title = title, active = 'schedule')
+        return render_template('schedule.html', title=title, active='schedule', form=form)
 
+    @app.route('/generate-slots', methods=['POST'])
+    def generate_slots():
+        form = SlotGenerationForm()
+        if form.validate_on_submit():
+            print(form.start_time.data)
+            return 'ok'
 
     return app
