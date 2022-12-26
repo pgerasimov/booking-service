@@ -27,3 +27,4 @@ class Schedule (db.Model):
     user = db.Column(db.Integer, db.ForeignKey('users.id'))
     from_date = db.Column(db.DateTime, default=datetime.datetime.now)
     till_date = db.Column(db.DateTime, default=datetime.datetime.now)
+    status = db.Column(db.String, required)
