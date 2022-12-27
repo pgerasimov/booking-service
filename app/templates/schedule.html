@@ -4,43 +4,36 @@
 
 <center>
     <p></p>
-    <div>
-        <h2>Мое расписание</h2>
-        <form>
+            <h2>Сформировать расписение</h2>
+            <form action="{{ url_for('slots_generate') }}" method="post">
+                {{ form.hidden_tag() }}
 
-        <hr>
+                <p>
+                    {{ form.work_date.label }}<br>
+                    {{ form.work_date(size=5) }}<br>
+                    {% for error in form.work_date.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.start_time.label }}
+                    {{ form.start_time }}<br>
+                    {{ form.end_time.label }}
+                    {{ form.end_time(size=8) }}
+                    {% for error in form.start_time.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.duration.label }}
+                    {{ form.duration(size=2) }}
+                    {% for error in form.start_time.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
 
-        <h2>Сформировать расписение</h2>
-        <form action="{{ url_for('generate-slots') }}" method="post">
-        {{ form.hidden_tag() }}
-
-        <p>
-            {{ form.work_date.label }}<br>
-            {{ form.work_date(size=5) }}<br>
-            {% for error in form.work_date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.start_time.label }}
-            {{ form.start_time }}<br>
-            {{ form.end_time.label }}
-            {{ form.end_time(size=8) }}
-            {% for error in form.start_time.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-             <p>
-            {{ form.duration.label }}
-            {{ form.duration(size=2) }}
-            {% for error in form.start_time.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    </div>
+                </p>
+                <p>{{ form.submit() }}</p>
+            </form>
 </center>
 
 {% endblock %}

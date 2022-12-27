@@ -5,7 +5,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from flask_migrate import Migrate
 from app.config import Config
 from flask import render_template, flash, redirect, url_for
-from app.forms import LoginForm, RegistrationForm, SlotGenerationForm
+from app.forms import LoginForm, RegistrationForm, SlotGenerationForm, MySlots
 from app.models import db, Users
 
 
@@ -40,7 +40,7 @@ def create_app():
         form = RegistrationForm()
         return render_template('registration.html', form=form, title="Registration", active='registration')
 
-    @app.route('/process-login', methods=['POST'])
+    @app.route('/process_login', methods=['POST'])
     def process_login():
         form = LoginForm()
 
@@ -92,11 +92,28 @@ def create_app():
         title = 'This is a magic'
         return render_template('schedule.html', title=title, active='schedule', form=form)
 
-    @app.route('/generate-slots', methods=['POST'])
-    def generate_slots():
+    @app.route('/myslots')
+    def my_slots():
+        form = MySlots()
+        title = 'My Slots for day'
+        return render_template('myslots.html', title=title, active='myslots', form=form)
+
+    @app.route('/slots_generate', methods=['POST'])
+    def slots_generate():
         form = SlotGenerationForm()
         if form.validate_on_submit():
-            print(form.start_time.data)
-            return 'ok'
+            # TODO: Write module for generate slots.
+            # Дата - статик в бд; Берем начало - старт тайм, окончание в старт+продолжительность - это слот.
+            # Дальше берем окончаение + продолжительность, если сумма == Времени конца - стопаем.
+            # Каждую итерацию пишем в БД отдельной записью
+            return redirect(url_for('schedule'))
+
+    @app.route('/get_my_slots')
+    def get_my_slots():
+        form = MySlots()
+        if form.validate_on_submit():
+            # TODO: Write module to get schedule.
+    #       Берем все из базы по дате-юзеру и показываем
+
 
     return app
