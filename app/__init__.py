@@ -7,6 +7,7 @@ from app.config import Config
 from flask import render_template, flash, redirect, url_for
 from app.forms import LoginForm, RegistrationForm, SlotGenerationForm, MySlots
 from app.models import db, Users
+from app.slot_generation import slot_generation
 
 
 def create_app():
@@ -102,17 +103,14 @@ def create_app():
     def slots_generate():
         form = SlotGenerationForm()
         if form.validate_on_submit():
-            # TODO: Write module for generate slots.
-            # Дата - статик в бд; Берем начало - старт тайм, окончание в старт+продолжительность - это слот.
-            # Дальше берем окончаение + продолжительность, если сумма == Времени конца - стопаем.
-            # Каждую итерацию пишем в БД отдельной записью
+            slot_generation(form)
             return redirect(url_for('schedule'))
 
     @app.route('/get_my_slots')
     def get_my_slots():
         form = MySlots()
         if form.validate_on_submit():
-            # TODO: Write module to get schedule.
+            pass
     #       Берем все из базы по дате-юзеру и показываем
 
 
