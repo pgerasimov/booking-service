@@ -1,6 +1,6 @@
 import logging
 
-from flask import Flask
+from flask import Flask, g
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask_migrate import Migrate
 from app.config import Config
@@ -111,7 +111,7 @@ def create_app():
         form = MySlots()
         if form.validate_on_submit():
             pass
-    #       Берем все из базы по дате-юзеру и показываем
 
+    #       Берем все из базы по дате-юзеру и показываем
 
     return app
